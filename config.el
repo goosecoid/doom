@@ -75,35 +75,24 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;
+;; Custom theme
 (setq doom-theme 'catppuccin)
 
+;; protobuf highlighting
 (use-package! protobuf-mode
   :defer-incrementally t)
 
+;; relative line numbers in buffers
 (setq display-line-numbers-type 'relative)
 
-(defun macos-open-with (&optional app-name path)
-  "Send PATH to APP-NAME on OSX."
-  (interactive)
-  (let* ((path (expand-file-name
-                (replace-regexp-in-string
-                 "'" "\\'"
-                 (or path (if (derived-mode-p 'dired-mode)
-                              (dired-get-file-for-visit)
-                            (buffer-file-name)))
-                 nil t)))
-         (command (format "open %s"
-                          (if app-name
-                              (format "-a %s '%s'" (shell-quote-argument app-name) path)
-                            (format "'%s'" path)))))
-    (message "Running: %s" command)
-    (shell-command command)))
-
+;; Set key bindings to open projectile project or current buffer in vscode
+;; Open project
 (map! :leader
       (:prefix-map ("o" . "open")
                    (:when (modulep! :os macos)
                      :desc "Reveal project in VS Code" "c" #'+macos/reveal-project-in-vscode)))
-
+;; Open file (current buffer)
 (map! :leader
       (:prefix-map ("o" . "open")
                    (:when (modulep! :os macos)
