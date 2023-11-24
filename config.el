@@ -86,7 +86,17 @@
 ;; relative line numbers in buffers
 (setq display-line-numbers-type 'relative)
 
+
 ;; Set key bindings to open projectile project or current buffer in vscode
+;;
+;; Add these bindings to $EMACS_CONFIG_DIR/modules/os/macos/autoload.el
+;; ;;;###autoload (autoload '+macos/reveal-project-in-vscode "os/macos/autoload" nil t)
+;; (+macos--open-with reveal-project-in-vscode "Visual Studio Code"
+;;                    (or (doom-project-root) default-directory))
+;; ;;;###autoload (autoload '+macos/reveal-file-in-vscode "os/macos/autoload" nil t)
+;; (+macos--open-with reveal-file-in-vscode "Visual Studio Code"
+;;                    def-buffer)
+;;
 ;; Open project
 (map! :leader
       (:prefix-map ("o" . "open")
