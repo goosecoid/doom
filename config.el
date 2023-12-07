@@ -107,3 +107,7 @@
       (:prefix-map ("o" . "open")
                    (:when (modulep! :os macos)
                      :desc "Reveal file in VS Code" "C" #'+macos/reveal-file-in-vscode)))
+
+(after! apheleia
+  (setf (alist-get 'ocp-indent apheleia-formatters)
+        '("ocp-indent" buffer-file-name)))
