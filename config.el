@@ -111,3 +111,18 @@
 (after! apheleia
   (setf (alist-get 'ocp-indent apheleia-formatters)
         '("ocp-indent" buffer-file-name)))
+
+(defun my-open-calendar ()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:ical-create-source
+     "Qover"
+     "~/Downloads/adrien.blavier@qover.com.ics"
+     "IndianRed"))))
+
+;; Open iCal Qover
+(map! :leader
+      (:prefix-map ("o" . "open")
+       :desc "Open Qover Calendar" "Q" #'my-open-calendar))
