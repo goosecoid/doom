@@ -33,11 +33,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;; (setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -119,10 +119,40 @@
    (list
     (cfw:ical-create-source
      "Qover"
-     "~/Downloads/adrien.blavier@qover.com.ics"
+     "~/Downloads/qover.ics"
      "IndianRed"))))
 
 ;; Open iCal Qover
 (map! :leader
       (:prefix-map ("o" . "open")
        :desc "Open Qover Calendar" "Q" #'my-open-calendar))
+
+(defun open-dir-of-current-file-vim ()
+  (interactive)
+  (async-shell-command
+   (format "kitty -e nvim +%d %s"
+           (+ (if (bolp) 1 0) (count-lines 1 (point)))
+           (shell-quote-argument (vc-root-dir)))))
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+       :desc "Open project in nvim" "N" #'open-dir-of-current-file-vim))
+
+;;copilot
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+;; smudge config
+(use-package! smudge
+  :bind-keymap ("C-c ." . smudge-command-map)
+  :custom
+  (smudge-oauth2-client-secret "fb88b8eab52047edbb55b07f6648068e")
+  (smudge-oauth2-client-id "4a60b0d87b3640cbae798d38274132e3")
+  ;; optional: enable transient map for frequent commands
+  (smudge-player-use-transient-map t))

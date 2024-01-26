@@ -53,3 +53,11 @@
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("editors/protobuf-mode.el")))
+
+(package! sly-asdf)
+
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
+
+(package! smudge
+  :recipe (:host github :repo "danielfm/smudge"))
